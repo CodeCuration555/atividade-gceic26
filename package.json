@@ -1,0 +1,16 @@
+{
+  "name": "atividade-gceic26",
+  "version": "1.0.0",
+  "description": "API para cálculo de custos do projeto MarkUp",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.1"
+  }
+}
