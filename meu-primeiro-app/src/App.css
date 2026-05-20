@@ -1,0 +1,525 @@
+/* ==========================================================================
+   RESET E VARIÁVEIS MODERNAS (PALETA NEUTRA COM ACENTOS)
+   ========================================================================== */
+:root {
+  /* Cores de Acento (Índigo moderno) */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #e0e7ff;
+  
+  /* Cores de Fundo e Texto (SaaS style) */
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  
+  /* Elementos de Interface */
+  --border-light: #cbd5e1;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  --radius-md: 8px;
+  --radius-sm: 4px;
+}
+
+/* Reset ultra-seguro contra estouro de tela */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   BLINDAGEM DE COR E SEGURANÇA DE FLUXO
+   ========================================================================== */
+body, 
+.main-content, 
+.card, 
+h2, h3, h4, 
+p, span, li, label, 
+input, strong {
+  color: var(--text-main) !important;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Garante que nada crie rolagem lateral no dedinho */
+  background-color: var(--bg-app) !important;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* Utilitário de centralização sem estourar width */
+.screen-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%; 
+  padding: 16px; /* Reduzido para dar mais espaço em telas pequenas */
+}
+
+/* ==========================================================================
+   1. ESTILIZAÇÃO MODERNA DE COMPONENTES (CARDS, BOTÕES, INPUTS)
+   ========================================================================== */
+.card {
+  background: var(--bg-card) !important;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: clamp(16px, 4vw, 32px); /* Dinâmico: 16px no mobile, até 32px no desktop */
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.input-group {
+  margin-bottom: 16px; /* Reduzido ligeiramente para compactar */
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.75rem; /* Ajustado para melhor encaixe */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted) !important;
+}
+
+.input-group label small {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: normal;
+  display: block;
+  margin-top: 2px;
+  color: #6b7280 !important;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px; /* Mais compacto e elegante */
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+  color: var(--text-main) !important;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.btn-primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary) !important;
+  color: #ffffff !important; 
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover) !important;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   2. TELAS INICIAIS (SPLASH & LOGIN) - ALINHAMENTOS SEGUROS
+   ========================================================================== */
+
+/* Splash Screen */
+.splash-bg {
+  background: radial-gradient(circle at center, #1e1b4b 0%, #111827 100%) !important;
+  width: 100%;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.splash-bg h1, 
+.splash-bg p, 
+.splash-bg .logo-icon {
+  color: #ffffff !important;
+}
+
+.splash-content .logo-icon {
+  font-size: 4rem; /* Um pouco menor para não quebrar em telas pequenas */
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.splash-content h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.splash-content p {
+  font-weight: 300;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border-left-color: #fff;
+  margin: 24px auto 0 auto;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Login Card */
+.login-bg {
+  background-color: var(--bg-app) !important;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: clamp(20px, 5vw, 40px);
+  border: none;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.login-card .subtitle {
+  color: var(--text-muted) !important;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  background-color: #fef2f2 !important;
+  color: #dc2626 !important;
+  border: 1px solid #fecaca;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   3. LAYOUT PRINCIPAL DASHBOARD (SISTEMA DE ENCAIXE PERFEITO)
+   ========================================================================== */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.navbar {
+  width: 240px; /* Reduzido de 260px para poupar espaço horizontal */
+  background-color: #111827 !important;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #1f2937;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  margin-bottom: 32px;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo span {
+  color: #ffffff !important;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.nav-links button {
+  background: transparent;
+  border: none;
+  color: #9ca3af !important;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-links button:hover {
+  color: #ffffff !important;
+  background-color: #1f2937;
+}
+
+.nav-links button.active {
+  color: #ffffff !important;
+  background-color: var(--primary) !important;
+  font-weight: 600;
+}
+
+.nav-links .logout-btn {
+  margin-top: auto;
+  color: #f87171 !important;
+  border: 1px solid transparent;
+}
+
+.nav-links .logout-btn:hover {
+  background-color: #451a1a !important;
+  border-color: #7f1d1d;
+  color: #fca5a5 !important;
+}
+
+/* Ajustado dinamicamente para respeitar o tamanho real restante */
+.main-content {
+  flex: 1;
+  margin-left: 240px;
+  padding: clamp(20px, 4vw, 40px);
+  max-width: calc(100% - 240px);
+  background-color: var(--bg-app);
+}
+
+.main-content h2 {
+  font-size: 1.75rem;
+  margin-bottom: 6px;
+}
+
+/* ==========================================================================
+   4. ESTILIZAÇÃO DAS TELAS INTERNAS
+   ========================================================================== */
+.container-calculadora {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+}
+
+.form-grid > .input-group:first-child,
+.form-grid > button {
+  grid-column: span 2;
+}
+
+.result-card {
+  position: sticky;
+  top: 24px;
+}
+
+.result-card h3 {
+  font-size: 1.15rem;
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item span {
+  color: var(--text-muted) !important;
+  font-size: 0.9rem;
+}
+
+.result-item strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.deestaque {
+  background-color: #f0fdf4 !important;
+  margin: 10px calc(clamp(16px, 4vw, 32px) * -1); /* Encaixe negativo dinâmico perfeito */
+  padding: 16px clamp(16px, 4vw, 32px);
+  border-top: 1px solid #bbf7d0;
+  border-bottom: 1px solid #bbf7d0;
+}
+
+.deestaque span {
+  color: #166534 !important;
+  font-weight: 600;
+}
+
+.deestaque strong.text-sucess {
+  color: #15803d !important;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+/* Grid de Equipe */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  text-align: center;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid var(--primary-light);
+}
+
+.team-card p {
+  color: var(--text-muted) !important;
+  font-size: 0.85rem;
+}
+
+/* Ajuda (FAQ) */
+.faq-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.faq-section p, .faq-section ol {
+  color: var(--text-muted) !important;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.faq-section li {
+  margin-bottom: 8px;
+}
+
+.formula-box {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary) !important;
+  margin: 16px 0;
+  text-align: center;
+}
+
+/* ==========================================================================
+   5. RESPONSIVIDADE ADAPTATIVA (MOBILE & TABLET)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .navbar {
+    width: 72px;
+    padding: 16px 8px;
+  }
+  .nav-logo {
+    justify-content: center;
+    padding-left: 0;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+  .nav-logo span { display: none; }
+  .nav-links button {
+    justify-content: center;
+    padding: 10px;
+  }
+  .nav-links button span { display: none; }
+  
+  .main-content {
+    margin-left: 72px;
+    max-width: calc(100% - 72px);
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-calculadora { 
+    grid-template-columns: 1fr; 
+    gap: 20px;
+  }
+  .form-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .form-grid > .input-group:first-child, 
+  .form-grid > button { 
+    grid-column: span 1; 
+  }
+  .result-card { 
+    position: static; 
+  }
+}
