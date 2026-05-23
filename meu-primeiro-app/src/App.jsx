@@ -176,7 +176,7 @@ function TelaPrincipal() {
   return (
     <div className="container-calculadora">
       <div className="card">
-        <h3>Preencha os dados abaixo</h3>
+        <h3>Preencha os dados abaixo:</h3>
         <form onSubmit={calcularMarkup} className="form-grid">
           <div className="input-group"><label>Custo do Produto (R$)</label><input type="number" step="0.01" value={custoProduto} onChange={(e) => setCustoProduto(e.target.value)} required placeholder="Ex: 50.00" /></div>
           <div className="input-group"><label>Despesas Variáveis (%)</label><input type="number" value={despesasVariaveis} onChange={(e) => setDespesasVariaveis(e.target.value)} required placeholder="Ex: 10" /></div>
@@ -205,9 +205,9 @@ function TelaSobre() {
       </div>
       <h2>Contribuições</h2>
       <div className="team-grid">
-        <div className="card team-card"><img src={fotoIntegrante} alt="Foto do integrante João Pedro Pires de Andrade" className="team-img" /><h4>João Pedro Pires de Andrade</h4><p>Representante do grupo, Desenvolvedor do Backend e API /MKP/custos</p></div>
-        <div className="card team-card"><img src={fotoIntegrante2} alt="Foto do integrante Lucca Schroelder Scovini" className="team-img" /><h4>Lucca Schroelder Scovini</h4><p>Desenvolvedor do Frontend e API /MKP/markup</p></div>
-        <div className="card team-card"><img src={fotoIntegrante3} alt="Foto do integrante Augusto Fidélis dos Santos Custódio" className="team-img" /><h4>Augusto Fidélis dos Santos Custódio</h4><p>DevOps, Qualidade, Documentação e API /MKP/preco-venda</p></div>
+        <div className="card team-card"><img src={fotoIntegrante} alt="Foto do integrante João Pedro Pires de Andrade" className="team-img" /><h4>João Pedro Pires de Andrade</h4><p>Representante do grupo, Desenvolvedor do Backend e a API /MKP/custos</p></div>
+        <div className="card team-card"><img src={fotoIntegrante2} alt="Foto do integrante Lucca Schroelder Scovini" className="team-img" /><h4>Lucca Schroelder Scovini</h4><p>Desenvolvedor do Frontend e a API /MKP/markup</p></div>
+        <div className="card team-card"><img src={fotoIntegrante3} alt="Foto do integrante Augusto Fidélis dos Santos Custódio" className="team-img" /><h4>Augusto Fidélis dos Santos Custódio</h4><p>DevOps, Qualidade, Documentação e Desenvolvedor da API /MKP/preco-venda</p></div>
       </div>
     </div>
   );
@@ -218,7 +218,35 @@ function TelaHelp() {
     <div className="help-container">
       <h2>Central de Ajuda</h2>
       <p className="subtitle">Entenda como extrair o melhor valor da nossa calculadora.</p>
-      <div className="card faq-section"><h3>Fórmula Utilizada</h3><div className="formula-box">Markup = 100 / (100 - (DV + DF + ML))</div></div>
+
+      <div className="card faq-section">
+        <h3>Fórmula Utilizada</h3>
+        <div className="formula-box">Markup = 100 / (100 - (DV + DF + ML))</div>
+        <p className="note">Onde: <strong>DV</strong> = Despesas Variáveis (%), <strong>DF</strong> = Despesas Fixas (%), <strong>ML</strong> = Margem de Lucro Desejada (%).</p>
+      </div>
+
+      <div className="card faq-list">
+        <h3>O que significa cada campo?</h3>
+        <dl className="faq-list-entries">
+          <dt>Custo do Produto (R$)</dt>
+          <dd>O custo direto de aquisição ou produção do item. Deve incluir matérias-primas, componentes e custo de fabricação por unidade.</dd>
+
+          <dt>Despesas Variáveis (%)</dt>
+          <dd>Percentual de custos que variam com a produção ou venda (ex.: comissões, embalagens, taxas por venda). Informe em porcentagem sobre o custo.</dd>
+
+          <dt>Despesas Fixas (%)</dt>
+          <dd>Percentual de custos que não dependem diretamente do volume (ex.: aluguel, energia, salários administrativos). Convertidas em percentual sobre o custo para compor o markup.</dd>
+
+          <dt>Margem Desejada (%)</dt>
+          <dd>Percentual de lucro líquido desejado sobre o preço de venda. Este projeto limita por padrão a 20% para fins de demonstração.</dd>
+
+          <dt>Markup (Multiplicador)</dt>
+          <dd>Valor multiplicador aplicado ao custo do produto para chegar ao preço de venda. Calculado pela fórmula mostrada acima. Ex.: um markup de 1.5 significa que o preço é 1.5x o custo.</dd>
+
+          <dt>Preço Sugerido (R$)</dt>
+          <dd>Preço final sugerido ao consumidor após aplicar o multiplicador ao custo do produto. Recomendamos arredondar para valores comerciais.</dd>
+        </dl>
+      </div>
     </div>
   );
 }

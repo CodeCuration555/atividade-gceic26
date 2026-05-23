@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const request = require('supertest');
-const app = require('../src/app');
+const app = require('../meu-primeiro-app/backend/server');
 
 test('POST /MKP/custos deve calcular e retornar o custo total', async () => {
   const response = await request(app)
