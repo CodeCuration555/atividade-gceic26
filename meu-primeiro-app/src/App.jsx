@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import fotoGrupo from './assets/foto_grupo_placeholder.png';
+import fotoIntegrante from './assets/foto_integrante_placeholder.png';
+import fotoIntegrante2 from './assets/foto_integrante_placeholder2.png';
+import fotoIntegrante3 from './assets/foto_integrante_placeholder3.png';
 
 export default function App() {
   const [telaAtual, setTelaAtual] = useState('splash');
@@ -130,13 +134,14 @@ function TelaPrincipal() {
   const [despesasFixas, setDespesasFixas] = useState('');
   const [margemLucro, setMargemLucro] = useState('');
   const [resultado, setResultado] = useState(null);
+  const apiBaseUrl = '/MKP';
 
   // Integração com a API via requisição HTTP POST
   const calcularMarkup = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/MKP/markup', {
+      const response = await fetch(`${apiBaseUrl}/markup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +157,7 @@ function TelaPrincipal() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.error || 'Ocorreu um erro ao processar o cálculo.');
+        alert(data.error || data.erro || 'Ocorreu um erro ao processar o cálculo.');
         return;
       }
 
@@ -194,11 +199,15 @@ function TelaSobre() {
   return (
     <div className="team-container-center">
       <h2>Conheça Nossa Equipe</h2>
-      <p className="subtitle">Projeto desenvolvido para a disciplina de Engenharia / Desenvolvimento de Software.</p>
+      <p className="subtitle">Projeto desenvolvido para a disciplina de Gerência de Configuração, Entrega e Integração Contínua no curso de Engenharia de Software.</p>
+      <div className="team-photo-card card">
+        <img src={fotoGrupo} alt="Foto do grupo" className="team-photo" />
+      </div>
+      <h2>Contribuições</h2>
       <div className="team-grid">
-        <div className="card team-card"><div className="team-img" style={{background: '#334155'}}></div><h4>Integrante 1</h4><p>Desenvolvedor Frontend</p></div>
-        <div className="card team-card"><div className="team-img" style={{background: '#334155'}}></div><h4>Integrante 2</h4><p>UI/UX Designer</p></div>
-        <div className="card team-card"><div className="team-img" style={{background: '#334155'}}></div><h4>Integrante 3</h4><p>Product Owner</p></div>
+        <div className="card team-card"><img src={fotoIntegrante} alt="Foto do integrante João Pedro Pires de Andrade" className="team-img" /><h4>João Pedro Pires de Andrade</h4><p>Representante do grupo, Desenvolvedor do Backend e API /MKP/custos</p></div>
+        <div className="card team-card"><img src={fotoIntegrante2} alt="Foto do integrante Lucca Schroelder Scovini" className="team-img" /><h4>Lucca Schroelder Scovini</h4><p>Desenvolvedor do Frontend e API /MKP/markup</p></div>
+        <div className="card team-card"><img src={fotoIntegrante3} alt="Foto do integrante Augusto Fidélis dos Santos Custódio" className="team-img" /><h4>Augusto Fidélis dos Santos Custódio</h4><p>DevOps, Qualidade, Documentação e API /MKP/preco-venda</p></div>
       </div>
     </div>
   );

@@ -39,6 +39,54 @@ app.post('/MKP/markup', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando com sucesso na porta ${PORT}`);
+// Rota de custos para manter a API do projeto unificada no mesmo servidor
+app.post('/MKP/custos', (req, res) => {
+  const { custosDiretos, custosIndiretos } = req.body;
+
+  const custosDiretosNumero = parseFloat(custosDiretos);
+  const custosIndiretosNumero = parseFloat(custosIndiretos);
+
+  if (Number.isNaN(custosDiretosNumero) || Number.isNaN(custosIndiretosNumero)) {
+    return res.status(400).json({
+      erro: 'Informe custosDiretos e custosIndiretos como números.'
+    });
+  }
+
+  const custoTotal = custosDiretosNumero + custosIndiretosNumero;
+
+  return res.json({
+    custosDiretos: custosDiretosNumero,
+    custosIndiretos: custosIndiretosNumero,
+    custoTotal: Number(custoTotal.toFixed(2))
+  });
 });
+
+// Rota final do Augusto: junta o custo total com o índice de markup
+app.post('/MKP/preco-venda', (req, res) => {
+  const { custoTotal, indiceMarkup, multiplicador } = req.body;
+
+  const custoTotalNumero = parseFloat(custoTotal);
+  const indiceMarkupNumero = parseFloat(indiceMarkup ?? multiplicador);
+
+  if (Number.isNaN(custoTotalNumero) || Number.isNaN(indiceMarkupNumero)) {
+    return res.status(400).json({
+      erro: 'Informe custoTotal e indiceMarkup como números.'
+    });
+  }
+
+  const precoVenda = custoTotalNumero * indiceMarkupNumero;
+
+  return res.json({
+    custoTotal: Number(custoTotalNumero.toFixed(2)),
+    indiceMarkup: Number(indiceMarkupNumero.toFixed(2)),
+    precoVenda: precoVenda.toFixed(2)
+  });
+});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando com sucesso na porta ${PORT}`);
+  });
+}
+
+module.exports = app;
