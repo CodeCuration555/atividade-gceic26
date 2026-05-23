@@ -19,6 +19,12 @@ app.post('/MKP/markup', (req, res) => {
   // Limita a margem ao teto máximo de 20% conforme a regra de negócio do app
   const ml = Math.min(parseFloat(margemLucro) || 0, 20); 
 
+  if (Number.isNaN(cp) || Number.isNaN(parseFloat(despesasVariaveis)) || Number.isNaN(parseFloat(despesasFixas)) || Number.isNaN(parseFloat(margemLucro))) {
+    return res.status(400).json({
+      error: 'Informe custoProduto, despesasVariaveis, despesasFixas e margemLucro como números.'
+    });
+  }
+
   const somaTaxas = dv + df + ml;
 
   // Validação: a soma das taxas não pode ser maior ou igual a 100% (evita divisão por zero ou negativa)
