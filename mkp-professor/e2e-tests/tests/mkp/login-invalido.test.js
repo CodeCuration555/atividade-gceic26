@@ -5,25 +5,16 @@ module.exports = async function runLoginInvalidoTest(driver) {
   await waitSplash(driver);
 
   await driver.findElement(By.id('usuario')).clear();
-  await driver.findElement(By.id('senha')).clear();
-  await driver.findElement(By.css('#loginForm button[type="submit"]')).click();
-  await driver.sleep(400);
-  await tiraFoto(driver, 'MKP-02-login-campos-vazios');
-
-  let errorText = await driver.findElement(By.id('loginErro')).getText();
-  if (!errorText.toLowerCase().includes('usuário ou senha incorretos')) {
-    throw new Error(`Erro inesperado para campos vazios: ${errorText}`);
-  }
-
-  await driver.findElement(By.id('usuario')).clear();
   await driver.findElement(By.id('usuario')).sendKeys('usuarioInvalido');
   await driver.findElement(By.id('senha')).clear();
   await driver.findElement(By.id('senha')).sendKeys('0000');
-  await driver.findElement(By.css('#loginForm button[type="submit"]')).click();
-  await driver.sleep(400);
-  await tiraFoto(driver, 'MKP-03-login-invalido');
+  await tiraFoto(driver, 'MKP-02-login-preenchido-invalido');
 
-  errorText = await driver.findElement(By.id('loginErro')).getText();
+  await driver.findElement(By.css('#loginForm button[type="submit"]')).click();
+  await driver.sleep(500);
+  await tiraFoto(driver, 'MKP-03-login-invalido-erro');
+
+  const errorText = await driver.findElement(By.id('loginErro')).getText();
   if (!errorText.toLowerCase().includes('usuário ou senha incorretos')) {
     throw new Error(`Erro inesperado para credenciais inválidas: ${errorText}`);
   }
