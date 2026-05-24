@@ -2,3 +2,10 @@ node_modules/
 .env
 .DS_Store
 /meu-primeiro-app/dist
+# relatórios de teste gerados
+# ignorar relatórios locais de teste gerados pelo jest-junit
+/mkp-professor/api/reports/
+/mkp-professor/api/junit.xml
+/mkp-professor/api/coverage
+mkp-professor/api/reports/junit.xml
+/mkp-professor/api/reports

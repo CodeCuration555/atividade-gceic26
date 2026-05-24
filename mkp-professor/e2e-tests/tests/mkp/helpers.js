@@ -29,7 +29,7 @@ async function tiraFoto(driver, name) {
   try {
     const img = await driver.takeScreenshot();
     fs.writeFileSync(path.join(SCREENSHOTS_DIR, `${name}.png`), img, 'base64');
-    console.log(`  📸 ${name}.png`);
+    console.log(`  Criado - ${name}.png`);
   } catch (error) {
     console.warn(`  Aviso: falha ao salvar ${name}.png`);
   }

@@ -4,12 +4,6 @@ module.exports = {
   collectCoverageFrom: ['app.js'],
   reporters: [
     'default',
-    [
-      'jest-junit',
-      {
-        outputDirectory: 'reports',
-        outputName: 'junit.xml'
-      }
-    ]
+    ['jest-junit', { outputDirectory: '.', outputName: 'junit.xml' }]
   ]
 };

@@ -8,37 +8,37 @@ const runSobreTest = require('./mkp/sobre.test.js');
 const runHelpTest = require('./mkp/help.test.js');
 
 async function main() {
-  console.log('🚀 Iniciando os testes funcionais E2E (Selenium)...');
+  console.log('Iniciando os testes funcionais E2E (Selenium)...');
   const driver = await buildDriver();
 
   try {
-    console.log('\n🎬 1. Testando Splash Screen...');
+    console.log('\n1. Testando Splash Screen...');
     await runSplashTest(driver);
 
-    console.log('\n🔒 2. Testando Login com Credenciais Inválidas...');
+    console.log('\n2. Testando Login com Credenciais Inválidas...');
     await runLoginInvalidoTest(driver);
 
-    console.log('\n🔑 3. Testando Login com Credenciais Válidas...');
+    console.log('\n3. Testando Login com Credenciais Válidas...');
     await runLoginValidoTest(driver);
 
-    console.log('\n📊 4. Testando Carregamento do Dashboard...');
+    console.log('\n4. Testando Carregamento do Dashboard...');
     await runDashboardTest(driver);
 
-    console.log('\n🧮 5. Testando Calculadora de Markup...');
+    console.log('\n5. Testando Calculadora de Markup...');
     await runCalculadoraTest(driver);
 
-    console.log('\n👥 6. Testando Tela Sobre a Equipe...');
+    console.log('\n6. Testando Tela Sobre a Equipe...');
     await runSobreTest(driver);
 
-    console.log('\nℹ️  7. Testando Central de Ajuda...');
+    console.log('\n7. Testando Central de Ajuda...');
     await runHelpTest(driver);
 
-    console.log('\n🎉 Todos os testes funcionais passaram com sucesso!');
+    console.log('\nTodos os testes funcionais passaram com sucesso!');
   } catch (error) {
-    console.error('\n❌ Erro fatal durante a execução dos testes:', error.message);
+    console.error('\nErro fatal durante a execução dos testes:', error.message);
     process.exit(1);
   } finally {
-    console.log('🧹 Encerrando driver do Selenium...');
+    console.log('Encerrando driver do Selenium...');
     await driver.quit();
   }
 }

@@ -3,7 +3,7 @@ const app = require('../app');
 
 describe('MKP API', () => {
   describe('GET /health', () => {
-    it('returns ok status', async () => {
+    it('retorna status ok', async () => {
       const response = await request(app).get('/health');
 
       expect(response.status).toBe(200);
@@ -12,7 +12,7 @@ describe('MKP API', () => {
   });
 
   describe('POST /MKP/markup', () => {
-    it('calculates markup and price for valid input', async () => {
+    it('calcula markup e preço para entrada válida', async () => {
       const response = await request(app)
         .post('/MKP/markup')
         .send({
@@ -29,7 +29,7 @@ describe('MKP API', () => {
       });
     });
 
-    it('rejects invalid numeric payloads', async () => {
+    it('rejeita payloads numéricos inválidos', async () => {
       const response = await request(app)
         .post('/MKP/markup')
         .send({
@@ -43,7 +43,7 @@ describe('MKP API', () => {
       expect(response.body.error).toMatch(/custoProduto/i);
     });
 
-    it('rejects sums that reach 100 percent', async () => {
+    it('rejeita somas que atingem 100%', async () => {
       const response = await request(app)
         .post('/MKP/markup')
         .send({
@@ -59,7 +59,7 @@ describe('MKP API', () => {
   });
 
   describe('POST /MKP/custos', () => {
-    it('sums direct and indirect costs', async () => {
+    it('soma custos diretos e indiretos', async () => {
       const response = await request(app)
         .post('/MKP/custos')
         .send({ custosDiretos: 100, custosIndiretos: 25.5 });
@@ -72,7 +72,7 @@ describe('MKP API', () => {
       });
     });
 
-    it('returns error for non numeric inputs', async () => {
+    it('retorna erro para entradas não numéricas', async () => {
       const response = await request(app)
         .post('/MKP/custos')
         .send({ custosDiretos: 'x', custosIndiretos: 25.5 });
@@ -83,7 +83,7 @@ describe('MKP API', () => {
   });
 
   describe('POST /MKP/preco-venda', () => {
-    it('calculates sale price from total cost and markup', async () => {
+    it('calcula preço de venda a partir do custo total e do markup', async () => {
       const response = await request(app)
         .post('/MKP/preco-venda')
         .send({ custoTotal: 125.5, indiceMarkup: 1.82 });
@@ -96,7 +96,7 @@ describe('MKP API', () => {
       });
     });
 
-    it('accepts multiplicador as fallback field', async () => {
+    it('aceita multiplicador como campo alternativo', async () => {
       const response = await request(app)
         .post('/MKP/preco-venda')
         .send({ custoTotal: 125.5, multiplicador: 1.82 });
@@ -105,7 +105,7 @@ describe('MKP API', () => {
       expect(response.body.precoVenda).toBe('228.41');
     });
 
-    it('returns error for invalid payloads', async () => {
+    it('retorna erro para payloads inválidos', async () => {
       const response = await request(app)
         .post('/MKP/preco-venda')
         .send({ custoTotal: 'x', indiceMarkup: 1.82 });
