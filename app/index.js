@@ -28,10 +28,6 @@ function requireAuth(req, res, next) {
   res.redirect("/mkp/login");
 }
 
-app.get("/", (req, res) => {
-  res.redirect("/mkp");
-});
-
 // Splash
 app.get("/mkp", (req, res) => {
   res.render("mkp/splash");
