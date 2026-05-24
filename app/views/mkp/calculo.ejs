@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKP - Cálculo de Custos</title>
+  <title>MKP - Cálculo</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -17,54 +17,125 @@
 
   <div class="container">
     <h2>Cálculo de Custos</h2>
-    <p>Bem-vindo, <strong><%= user.nome %></strong></p>
+    <p style="margin-bottom:20px">Bem-vindo, <strong><%= user.nome %></strong></p>
 
-    <form id="formCusto">
+    <!-- 1. Custos Diretos + Indiretos -->
+    <h3 style="margin-bottom:12px">1. Custo Total</h3>
+    <form id="formCustos">
       <div class="form-group">
-        <label for="custosDiretos">Custos Diretos (R$)</label>
-        <input type="number" id="custosDiretos" name="custosDiretos" step="0.01" required>
+        <label>Custos Diretos (R$)</label>
+        <input type="number" id="custosDiretos" step="0.01" required>
       </div>
       <div class="form-group">
-        <label for="custosIndiretos">Custos Indiretos (R$)</label>
-        <input type="number" id="custosIndiretos" name="custosIndiretos" step="0.01" required>
+        <label>Custos Indiretos (R$)</label>
+        <input type="number" id="custosIndiretos" step="0.01" required>
       </div>
       <button type="submit" class="btn">Calcular</button>
     </form>
+    <div class="result-box" id="resCustos">
+      <p>Custos Diretos: R$ <span id="rCD">-</span></p>
+      <p>Custos Indiretos: R$ <span id="rCI">-</span></p>
+      <p><strong>Custo Total: R$ <span id="rCT">-</span></strong></p>
+    </div>
 
-    <div class="result-box" id="resultado">
-      <h3>Resultado</h3>
-      <p>Custos Diretos: R$ <span id="resDiretos">-</span></p>
-      <p>Custos Indiretos: R$ <span id="resIndiretos">-</span></p>
-      <p><strong>Custo Total: R$ <span id="resTotal">-</span></strong></p>
+    <hr style="margin:30px 0">
+
+    <!-- 2. Markup -->
+    <h3 style="margin-bottom:12px">2. Markup (Multiplicador e Preço de Venda)</h3>
+    <form id="formMarkup">
+      <div class="form-group">
+        <label>Custo do Produto (R$)</label>
+        <input type="number" id="custoProduto" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Despesas Variáveis (%)</label>
+        <input type="number" id="despesasVariaveis" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Despesas Fixas (%)</label>
+        <input type="number" id="despesasFixas" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Margem de Lucro (% — máx 20%)</label>
+        <input type="number" id="margemLucro" step="0.01" max="20" required>
+      </div>
+      <button type="submit" class="btn">Calcular</button>
+    </form>
+    <div class="result-box" id="resMkp">
+      <p>Multiplicador (Markup): <span id="rMult">-</span></p>
+      <p><strong>Preço de Venda: R$ <span id="rPV">-</span></strong></p>
+    </div>
+
+    <hr style="margin:30px 0">
+
+    <!-- 3. Preço de Venda Final -->
+    <h3 style="margin-bottom:12px">3. Preço de Venda Final</h3>
+    <form id="formPreco">
+      <div class="form-group">
+        <label>Custo Total (R$)</label>
+        <input type="number" id="custoTotalFinal" step="0.01" required>
+      </div>
+      <div class="form-group">
+        <label>Índice de Markup</label>
+        <input type="number" id="indiceMarkup" step="0.01" required>
+      </div>
+      <button type="submit" class="btn">Calcular</button>
+    </form>
+    <div class="result-box" id="resPreco">
+      <p>Custo Total: R$ <span id="rCTF">-</span></p>
+      <p>Índice de Markup: <span id="rIM">-</span></p>
+      <p><strong>Preço de Venda: R$ <span id="rPVF">-</span></strong></p>
     </div>
   </div>
 
   <script>
-    document.getElementById('formCusto').addEventListener('submit', async (e) => {
+    async function post(url, body) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      return res.json();
+    }
+
+    document.getElementById('formCustos').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const custosDiretos = parseFloat(document.getElementById('custosDiretos').value);
-      const custosIndiretos = parseFloat(document.getElementById('custosIndiretos').value);
+      const data = await post('/api/mkp/custos', {
+        custosDiretos: parseFloat(document.getElementById('custosDiretos').value),
+        custosIndiretos: parseFloat(document.getElementById('custosIndiretos').value)
+      });
+      if (data.erro) return alert(data.erro);
+      document.getElementById('rCD').textContent = data.custosDiretos.toFixed(2);
+      document.getElementById('rCI').textContent = data.custosIndiretos.toFixed(2);
+      document.getElementById('rCT').textContent = data.custoTotal.toFixed(2);
+      document.getElementById('resCustos').style.display = 'block';
+    });
 
-      try {
-        const res = await fetch('/api/mkp/custos', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ custosDiretos, custosIndiretos })
-        });
-        const data = await res.json();
+    document.getElementById('formMarkup').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = await post('/api/mkp/markup', {
+        custoProduto: parseFloat(document.getElementById('custoProduto').value),
+        despesasVariaveis: parseFloat(document.getElementById('despesasVariaveis').value),
+        despesasFixas: parseFloat(document.getElementById('despesasFixas').value),
+        margemLucro: parseFloat(document.getElementById('margemLucro').value)
+      });
+      if (data.error) return alert(data.error);
+      document.getElementById('rMult').textContent = data.multiplicador;
+      document.getElementById('rPV').textContent = data.precoVenda;
+      document.getElementById('resMkp').style.display = 'block';
+    });
 
-        if (data.erro) {
-          alert(data.erro);
-          return;
-        }
-
-        document.getElementById('resDiretos').textContent = data.custosDiretos.toFixed(2);
-        document.getElementById('resIndiretos').textContent = data.custosIndiretos.toFixed(2);
-        document.getElementById('resTotal').textContent = data.custoTotal.toFixed(2);
-        document.getElementById('resultado').style.display = 'block';
-      } catch (err) {
-        alert('Erro ao calcular: ' + err.message);
-      }
+    document.getElementById('formPreco').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = await post('/api/mkp/preco-venda', {
+        custoTotal: parseFloat(document.getElementById('custoTotalFinal').value),
+        indiceMarkup: parseFloat(document.getElementById('indiceMarkup').value)
+      });
+      if (data.erro) return alert(data.erro);
+      document.getElementById('rCTF').textContent = data.custoTotal.toFixed(2);
+      document.getElementById('rIM').textContent = data.indiceMarkup.toFixed(2);
+      document.getElementById('rPVF').textContent = data.precoVenda;
+      document.getElementById('resPreco').style.display = 'block';
     });
   </script>
 </body>

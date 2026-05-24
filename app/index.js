@@ -74,11 +74,11 @@ app.get("/mkp/help", requireAuth, (req, res) => {
   res.render("mkp/help", { user: req.session.mkpUser });
 });
 
-// Proxy para API
-app.post("/api/mkp/custos", requireAuth, async (req, res) => {
+// Proxy para API MKP
+async function proxyMkp(req, res, rota) {
   try {
     const fetch = (await import("node-fetch")).default;
-    const response = await fetch(`${API_URL}/api/mkp/custos`, {
+    const response = await fetch(`${API_URL}/api/mkp/${rota}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req.body),
@@ -88,7 +88,11 @@ app.post("/api/mkp/custos", requireAuth, async (req, res) => {
   } catch (err) {
     res.status(400).json({ success: false, error: err.message });
   }
-});
+}
+
+app.post("/api/mkp/custos", requireAuth, (req, res) => proxyMkp(req, res, "custos"));
+app.post("/api/mkp/markup", requireAuth, (req, res) => proxyMkp(req, res, "markup"));
+app.post("/api/mkp/preco-venda", requireAuth, (req, res) => proxyMkp(req, res, "preco-venda"));
 
 app.listen(PORT, () => {
   console.log(`App MKP rodando: http://localhost:${PORT}/mkp`);
